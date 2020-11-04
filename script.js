@@ -52,7 +52,10 @@ let appData = {
             item.style.backgroundColor = "rgba(255, 127, 99, 0)";
             item.value = "";
         });
-        this.budgetMonth = 0;
+        console.log(appData);
+        appData.budgetMonth = 0;
+        appData.budgetDay = 0;
+        appData.budget = 0;
         periodSelect.value = 0;
         periodAmount.textContent = 1;
         incomePeriod.value = 0;
@@ -85,12 +88,13 @@ let appData = {
         this.getInfoDeposit();
         this.getIncome();
         this.showResult();
+        
         inputAll = document.querySelectorAll("input");
         inputAll.forEach(item => {
             item.setAttribute("readonly", null);
             item.style.backgroundColor = "#dadada";
         });
-        
+        console.log(appData)
         buttonStart.style.display = "none";
         cancel.style.display = "inline-block";
         periodSelect.disabled = false;
@@ -233,6 +237,8 @@ salaryAmount.addEventListener("input", function() {
         buttonStart.disabled = false;
     }
 });
+
+console.log(appData);
 buttonStart.addEventListener("click", appData.start.bind(appData));
 cancel.addEventListener("click", appData.reset);
 expensesBtnPlus.addEventListener("click", appData.addExpensesBlock);
