@@ -39,8 +39,8 @@ let cloneIncome,
     amountSelect,
     amuntValue;
 
-let appData = {
-    income: {},
+let appData = { 
+    income: {},   
     addIncome: [],
     expenses: {},
     addExpenses: [],
