@@ -49,8 +49,6 @@ let appData = {
     moneyDeposit: 0,
     period: 0,
     reset: function(){
-        console.log(appData);
-
         inputAll = document.querySelectorAll("input");
         inputAll.forEach(item => {
             item.removeAttribute("readonly");
@@ -109,7 +107,6 @@ let appData = {
         this.getInfoDeposit();
         this.getIncome();
         this.showResult();
-        
         inputAll = document.querySelectorAll("input");
         inputAll.forEach(item => {
             item.setAttribute("readonly", null);
@@ -118,12 +115,13 @@ let appData = {
         buttonStart.style.display = "none";
         cancel.style.display = "inline-block";
         periodSelect.disabled = false;
+        incomeBtnPlus.style.display = "none";
+        expensesBtnPlus.style.display = "none";
     },
     addExpensesBlock: function(){
         cloneExpenses = expensesItems[0].cloneNode(true);
         expensesItems[0].parentNode.insertBefore(cloneExpenses, expensesBtnPlus);
         inp = data.querySelectorAll("input");
-        this.start;
         expensesItems = document.querySelectorAll(".expenses-items");
         if (expensesItems.length === 3){
             expensesBtnPlus.style.display = "none";
@@ -142,7 +140,6 @@ let appData = {
         cloneIncome = incomeItems[0].cloneNode(true);
         incomeItems[0].parentNode.insertBefore(cloneIncome, incomeBtnPlus);
         inp = data.querySelectorAll("input");
-        this.start;
         incomeItems = document.querySelectorAll(".income-items");
         if(incomeItems.length === 3){
             incomeBtnPlus.style.display = "none";
@@ -164,9 +161,7 @@ let appData = {
         addExpensesValue.value = this.addExpenses.join(", ");
         additionalIncomeValue.value = this.addIncome.join(", ");
         targetMonth.value = Math.ceil(this.getTargetMonth());
-        this.reset;
         incomePeriod.value = +this.budgetMonth;
-        
         periodSelect.addEventListener("input", function(){
             if (salaryAmount.value !== ""){
                 let resultAmount = appData.budgetMonth * +amuntValue;
