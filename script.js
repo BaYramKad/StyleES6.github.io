@@ -49,6 +49,8 @@ let appData = {
     moneyDeposit: 0,
     period: 0,
     reset: function(){
+        console.log(appData);
+
         inputAll = document.querySelectorAll("input");
         inputAll.forEach(item => {
             item.removeAttribute("readonly");
@@ -71,6 +73,11 @@ let appData = {
         appData.budgetMonth = 0;
         appData.budgetDay = 0;
         appData.budget = 0;
+        appData.addExpenses = [];
+        appData.addIncome = [];
+        appData.expenses = {};
+        appData.income = {};
+        appData.expensesMonth = 0;
         periodSelect.value = 0;
         periodAmount.textContent = 1;
         incomePeriod.value = 0;
