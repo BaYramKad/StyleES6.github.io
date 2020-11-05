@@ -68,7 +68,6 @@ let appData = {
             expensesBtnPlus.style.display = "inline-block";
         }
         depositCheck.checked = false;
-        console.log('checkbox: ', checkbox);
         appData.budgetMonth = 0;
         appData.budgetDay = 0;
         appData.budget = 0;
@@ -81,7 +80,6 @@ let appData = {
             if (salaryAmount.value !== ""){
                 let resultAmount = 0;
                 incomePeriod.value = +resultAmount;
-                console.log(appData)
             } else if (salaryAmount.value === ""){
                 periodSelect.disabled = false;
             }
@@ -95,7 +93,7 @@ let appData = {
         cancel.style.display = "none";
     },
     start: function() {
-        this.budget = salaryAmount.value;
+        this.budget = salaryAmount.value.replace(/[^0-9]+/g, "");
         this.getBudget();
         this.getAddIncome();
         this.getAddExpenses();
@@ -161,7 +159,7 @@ let appData = {
         targetMonth.value = Math.ceil(this.getTargetMonth());
         this.reset;
         incomePeriod.value = +this.budgetMonth;
-        incomePeriod.value = +this.budgetMonth * periodSelect.value;
+        
         periodSelect.addEventListener("input", function(){
             if (salaryAmount.value !== ""){
                 let resultAmount = appData.budgetMonth * +amuntValue;
@@ -204,7 +202,7 @@ let appData = {
         this.budgetDay = this.budgetMonth / 30;
     },
     getTargetMonth: function() {
-        return targetAmout.value/this.budgetMonth;
+        return targetAmout.value.replace(/[^0-9]+/g, "") / this.budgetMonth;
     },
     getStatusIncome: function(){
         let data = this.budgetDay;
@@ -241,7 +239,6 @@ let appData = {
         return amountSelect;
     }
 };
-
 salaryAmount.addEventListener("input", function() {
     if (salaryAmount.value === "") {
         buttonStart.disabled = true;
@@ -249,10 +246,8 @@ salaryAmount.addEventListener("input", function() {
         buttonStart.disabled = false;
     }
 });
-
 buttonStart.addEventListener("click", appData.start.bind(appData));
 cancel.addEventListener("click", appData.reset.bind(appData));
 expensesBtnPlus.addEventListener("click", appData.addExpensesBlock);
 incomeBtnPlus.addEventListener("click", appData.addIncomeBlock);
 periodSelect.addEventListener("input", appData.calcSavedMoney);
-
