@@ -11,6 +11,7 @@ let incomeAmount = document.querySelector(".income-amount"),
     addExpItem = document.querySelector(".additional_expenses-item"),
     targetAmout = document.querySelector(".target-amount"),
     checkbox = document.querySelector(".deposit-checkmark"),
+    depositCheck = document.querySelector("#deposit-check"),
     income = document.querySelector(".income"),
     expenses = document.querySelector(".expenses"),
     additionalIncomeItem = document.querySelectorAll(".additional_income-item"),
@@ -30,12 +31,14 @@ let incomeAmount = document.querySelector(".income-amount"),
     cancel = document.querySelector("#cancel");
     
 buttonStart.style.backgroundColor = "#0c1d71";
-
 let isNumber = function(n){
     return !isNaN(parseFloat(n)) && isFinite(n);
 };
-let amountSelect;
-let amuntValue;
+let cloneIncome,
+    cloneExpenses,
+    amountSelect,
+    amuntValue;
+
 let appData = {
     income: {},
     addIncome: [],
@@ -52,7 +55,20 @@ let appData = {
             item.style.backgroundColor = "rgba(255, 127, 99, 0)";
             item.value = "";
         });
-        console.log(appData);
+        for (let i = 0; i < incomeItems.length; i++){
+            if (i > 0){
+                incomeItems[i].remove();
+            }
+            incomeBtnPlus.style.display = "inline-block";
+        }
+        for (let i = 0; i < expensesItems.length; i++){
+            if (i > 0){
+                expensesItems[i].remove();
+            }
+            expensesBtnPlus.style.display = "inline-block";
+        }
+        depositCheck.checked = false;
+        console.log('checkbox: ', checkbox);
         appData.budgetMonth = 0;
         appData.budgetDay = 0;
         appData.budget = 0;
@@ -94,13 +110,12 @@ let appData = {
             item.setAttribute("readonly", null);
             item.style.backgroundColor = "#dadada";
         });
-        console.log(appData)
         buttonStart.style.display = "none";
         cancel.style.display = "inline-block";
         periodSelect.disabled = false;
     },
     addExpensesBlock: function(){
-        let cloneExpenses = expensesItems[0].cloneNode(true);
+        cloneExpenses = expensesItems[0].cloneNode(true);
         expensesItems[0].parentNode.insertBefore(cloneExpenses, expensesBtnPlus);
         inp = data.querySelectorAll("input");
         this.start;
@@ -119,7 +134,7 @@ let appData = {
         });
     },
     addIncomeBlock: function(){
-        let cloneIncome = incomeItems[0].cloneNode(true);
+        cloneIncome = incomeItems[0].cloneNode(true);
         incomeItems[0].parentNode.insertBefore(cloneIncome, incomeBtnPlus);
         inp = data.querySelectorAll("input");
         this.start;
@@ -129,7 +144,6 @@ let appData = {
         }
     },
     getIncome: function(){
-        
         incomeItems.forEach(function(item){
             let itemIncome = item.querySelector(".income-title").value;
             let cashIncome = item.querySelector(".income-amount").value;
@@ -152,7 +166,6 @@ let appData = {
             if (salaryAmount.value !== ""){
                 let resultAmount = appData.budgetMonth * +amuntValue;
                 incomePeriod.value = +resultAmount;
-                console.log(appData)
             } else if (salaryAmount.value === ""){
                 periodSelect.disabled = false;
             }
@@ -225,7 +238,6 @@ let appData = {
         let value = +periodSelect.value;
         amuntValue = periodAmount.textContent = +value;
         amountSelect = (amuntValue = +periodSelect.value);
-        console.log('amountSelect: ', amountSelect);
         return amountSelect;
     }
 };
@@ -238,9 +250,9 @@ salaryAmount.addEventListener("input", function() {
     }
 });
 
-console.log(appData);
 buttonStart.addEventListener("click", appData.start.bind(appData));
-cancel.addEventListener("click", appData.reset);
+cancel.addEventListener("click", appData.reset.bind(appData));
 expensesBtnPlus.addEventListener("click", appData.addExpensesBlock);
 incomeBtnPlus.addEventListener("click", appData.addIncomeBlock);
 periodSelect.addEventListener("input", appData.calcSavedMoney);
+
