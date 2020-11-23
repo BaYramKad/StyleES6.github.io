@@ -318,7 +318,9 @@ class AppData {
                 alert ("Введите процент от 0 до 100");
             }
              do {
-                if (!isNaN(this.target)){
+                 console.log(this.target);
+                if (isNaN(this.target)){
+                    alert("Введите число");
                     buttonStart.disabled = true;
                 } 
                 if (salaryAmount.value !== ""){
