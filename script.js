@@ -296,6 +296,12 @@ class AppData {
             depositBank.removeEventListener("change", this.changePercent);
         }
     }
+
+    validation(value){
+        isNaN(parseFloat(value));
+        return;
+    }
+
     eventListeners(){
         salaryAmount.addEventListener("input", function(event) {
             let eventDepos = event.target.value;
@@ -307,18 +313,18 @@ class AppData {
         });
         depositPercent.addEventListener("input", (event) => {
             this.target = +event.target.value;
-
             if (this.target < 0 || this.target >= 100){
                 buttonStart.disabled = true;
-                alert ("Введите корректное значение в поле проценты");
+                alert ("Введите процент от 0 до 100");
             }
              do {
-                if (this.target.length > 2){
+                if (!isNaN(this.target)){
                     buttonStart.disabled = true;
-                } else {
+                } 
+                if (salaryAmount.value !== ""){
                     buttonStart.disabled = false;
                 }
-            } while(this.target.length > 2 || this.target.length < 2)
+            } while(this.validation(this.target));
         });
         depositCheck.addEventListener("change", this.depositHandler.bind(this));
         buttonStart.addEventListener("click", appData.start.bind(appData));
