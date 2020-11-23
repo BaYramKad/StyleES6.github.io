@@ -54,6 +54,7 @@ class AppData {
         this.budgetDay = 0;
         this.budgetMonth = 0;
         this.expensesMonth = 0;
+        this.target = 0;
     }
 
     reset(){
@@ -140,6 +141,7 @@ class AppData {
         depositPercent.value = this.percentDeposit;
         incomeBtnPlus.style.display = "none";
         expensesBtnPlus.style.display = "none";
+        
     }
 
     addExpensesBlock(){
@@ -193,15 +195,19 @@ class AppData {
     }
     
     showResult(){
-        budgetMunth.value = +this.budget;
+        budgetMunth.value   = +this.budget;
         expensesMonth.value = this.expensesMonth;
-        budGetDay.value = Math.ceil(this.budgetDay);
-        addExpensesValue.value = this.addExpenses.join(", ");
+        budGetDay.value     = Math.ceil(this.budgetDay);
+        addExpensesValue.value      = this.addExpenses.join(", ");
         additionalIncomeValue.value = this.addIncome.join(", ");
-        targetMonth.value = Math.ceil(this.getTargetMonth());
-        incomePeriod.value = +this.budgetMunth;
-        incomePeriod.value = +this.budgetMonth * +this.amuntValue;
-
+        targetMonth.value   = Math.ceil(this.getTargetMonth());
+        incomePeriod.value  = +this.budgetMunth;
+        incomePeriod.value  = +this.budgetMonth * +this.amuntValue;
+        if (isNaN(this.target) ){
+            targetMonth.value   = "Введите число в поле 'Проценты'";
+            budGetDay.value     = "Введите число в поле 'Проценты'";
+            incomePeriod.value  = "Введите число в поле 'Проценты'";
+        }
         periodSelect.addEventListener("input", () => {
             if (salaryAmount.value !== ""){
                 const resultAmount = this.budgetMonth * +this.amuntValue;
@@ -300,13 +306,19 @@ class AppData {
             }
         });
         depositPercent.addEventListener("input", (event) => {
-            let target = event.target.value;
-            if (target < 0 || target >= 100 || typeof target === "string"){
+            this.target = +event.target.value;
+
+            if (this.target < 0 || this.target >= 100){
                 buttonStart.disabled = true;
                 alert ("Введите корректное значение в поле проценты");
-            } else if (event.target.value.length === 2){
-                buttonStart.disabled = false;
             }
+             do {
+                if (this.target.length > 2){
+                    buttonStart.disabled = true;
+                } else {
+                    buttonStart.disabled = false;
+                }
+            } while(this.target.length > 2 || this.target.length < 2)
         });
         depositCheck.addEventListener("change", this.depositHandler.bind(this));
         buttonStart.addEventListener("click", appData.start.bind(appData));
