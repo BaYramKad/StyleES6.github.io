@@ -35,7 +35,6 @@ let incomeAmount = document.querySelector(".income-amount"),
     depositBank = document.querySelector(".deposit-bank"),
     depositCalc = document.querySelector(".deposit-calc");
     
-buttonStart.style.backgroundColor = "#0c1d71";
 class AppData {
     constructor() {
         this.cloneIncome;
