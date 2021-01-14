@@ -109,6 +109,7 @@ class AppData {
         depositBank.style.display = "none";            
         depositAmount.style.display = "none";
         depositPercent.style.display = "none";
+        depositCalc.style.display = "block";
         if (depositCheck.checked){
             depositPercent.style.display = "inline-block";
         } else {
@@ -132,8 +133,13 @@ class AppData {
         inputAll = document.querySelectorAll("input");
         inputAll.forEach(item => {
             item.setAttribute("readonly", null);
-            item.style.backgroundColor = "#dadada";
+            if (item.classList.contains("result-total")) {
+                item.style.backgroundColor = "#fff0";
+            } else {
+                item.style.backgroundColor = "#dadada";
+            }
         });
+
         depositCheck.disabled = true;
         buttonStart.style.display = "none";
         cancel.style.display = "inline-block";
@@ -141,7 +147,8 @@ class AppData {
         depositPercent.value = this.percentDeposit;
         incomeBtnPlus.style.display = "none";
         expensesBtnPlus.style.display = "none";
-        
+        depositCalc.style.display = "none";
+
     }
 
     addExpensesBlock(){
@@ -318,7 +325,6 @@ class AppData {
                 alert ("Введите процент от 0 до 100");
             }
              do {
-                 console.log(this.target);
                 if (isNaN(this.target)){
                     alert("Введите число");
                     buttonStart.disabled = true;
